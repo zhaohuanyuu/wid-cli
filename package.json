@@ -1,0 +1,21 @@
+{
+  "name": "wid-kit",
+  "version": "0.0.1",
+  "description": "various project boilerplate creation and tool scaffolding by clack",
+  "main": "main.js",
+  "scripts": {
+    "start": "tsup src/index.ts --watch --env.NODE_ENV development",
+    "build": "tsup src/index.ts --env.NODE_ENV production"
+  },
+  "author": "auu",
+  "license": "MIT",
+  "keywords": ["cli", "boilerplate generator"],
+	"dependencies": {
+		"@clack/core": "^0.3.3",
+		"@clack/prompts": "^0.7.0"
+	},
+	"devDependencies": {
+		"tsup": "^8.0.1",
+		"typescript": "^5.3.2"
+	}
+}

@@ -1,10 +1,21 @@
-# For projects using Nanoc (http://nanoc.ws/)
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Default location for output (needs to match output_dir's value found in nanoc.yaml)
-output/
+# System files
+.DS_Store
 
-# Temporary file directory
-tmp/nanoc/
+# bundle files
+dist
 
-# Crash Log
-crash.log
+# caches
+.cache
+
+# Dependency directories
+node_modules
+yarn.lock
+pnpm.lock
+bun.lockb
