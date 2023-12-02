@@ -1,6 +1,6 @@
-# wid-kit
+# wid-create-kit
 
-Various project boilerplate creation and tool scaffolding by [clack](https://github.com/natemoo-re/clack)
+Various project boilerplate creation and tool scaffolding powered by [clack](https://github.com/natemoo-re/clack)
 
 ## module federation
 
