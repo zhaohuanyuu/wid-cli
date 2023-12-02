@@ -1,16 +1,16 @@
 {
   "name": "wid-kit",
+  "author": "auu",
   "version": "0.0.1",
   "description": "various project boilerplate creation and tool scaffolding by clack",
+  "main": "main.ts",
   "bin": {
     "wid": "dist/main.js"
   },
-  "main": "main.ts",
   "scripts": {
     "start": "tsup src/main.ts --watch --env.NODE_ENV development",
     "build": "tsup src/main.ts --env.NODE_ENV production"
   },
-  "author": "auu",
   "license": "MIT",
   "keywords": [
     "cli",
