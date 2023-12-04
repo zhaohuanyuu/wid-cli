@@ -4,17 +4,12 @@ import { defineConfig } from 'tsup'
 // const isProd = lifecycleScript.indexOf('production') > -1;
 
 export default defineConfig({
-  entry: ['src/main.ts'],
-  target: 'es2020',
+  entry: ['bin/index.ts'],
+  target: 'es2021',
   clean: true,
   sourcemap: true,
   splitting: false,
-  publicDir: '/server',
+  // publicDir: '/server',
   // legacyOutput: true,
-  format: ['esm', /*'cjs'*/],
-  outExtension({ format }) {
-    return {
-      js: `.${format !== 'esm' ? format : ''}js`
-    }
-  }
+  // format: ['esm', 'cjs'],
 })

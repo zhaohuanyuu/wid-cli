@@ -3,13 +3,13 @@
   "author": "auu",
   "version": "0.0.1",
   "description": "various project boilerplate creation and tool scaffolding by clack",
-  "main": "main.ts",
+  "main": "index.ts",
   "bin": {
-    "wid": "dist/main.js"
+    "wid": "bin/index.js"
   },
   "scripts": {
-    "start": "tsup src/main.ts --watch --env.NODE_ENV development",
-    "build": "tsup src/main.ts --env.NODE_ENV production"
+    "start": "tsup bin/index.ts --watch --env.NODE_ENV development",
+    "build": "tsup bin/index.ts --env.NODE_ENV production"
   },
   "license": "MIT",
   "keywords": [
