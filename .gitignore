@@ -9,7 +9,7 @@ yarn-error.log*
 .DS_Store
 
 # bundle files
-dist
+bin
 
 # caches
 .cache
