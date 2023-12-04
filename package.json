@@ -8,8 +8,8 @@
     "wid": "bin/index.js"
   },
   "scripts": {
-    "start": "tsup bin/index.ts --watch --env.NODE_ENV development",
-    "build": "tsup bin/index.ts --env.NODE_ENV production"
+    "start": "tsup src/index.ts --watch --env.NODE_ENV development",
+    "build": "tsup src/index.ts --env.NODE_ENV production"
   },
   "license": "MIT",
   "keywords": [

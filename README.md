@@ -1,4 +1,4 @@
-# wid-create-kit
+# wid-cli
 
 Various project boilerplate creation and tool scaffolding powered by [clack](https://github.com/natemoo-re/clack)
 

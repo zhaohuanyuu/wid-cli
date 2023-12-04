@@ -5,7 +5,7 @@ import { intro, outro } from '@clack/prompts'
 
 import { version } from "../package.json"
 
-const cli = cac();
+const cli = cac('wid');
 
 cli.help()
 cli.version(version)
