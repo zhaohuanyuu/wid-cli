@@ -2,14 +2,16 @@
   "name": "wid-kit",
   "author": "auu",
   "version": "0.0.1",
-  "description": "various project boilerplate creation and tool scaffolding by clack",
+  "description": "various project boilerplate creation and tool scaffolding powered by clack",
   "main": "index.ts",
   "bin": {
     "wid": "bin/index.js"
   },
   "scripts": {
     "start": "tsup src/index.ts --watch --env.NODE_ENV development",
-    "build": "tsup src/index.ts --env.NODE_ENV production"
+    "build": "tsup src/index.ts --env.NODE_ENV production",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "license": "MIT",
   "keywords": [
@@ -17,11 +19,14 @@
     "boilerplate generator"
   ],
   "dependencies": {
-    "cac": "^6.7.14",
     "@clack/core": "^0.3.3",
-    "@clack/prompts": "^0.7.0"
+    "@clack/prompts": "^0.7.0",
+    "cac": "^6.7.14"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.3.4",
+    "@types/node": "^20.10.3",
+    "eslint": "^8.55.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.2"
   },

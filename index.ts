@@ -3,12 +3,12 @@
 import cac from "cac"
 import { intro, outro } from '@clack/prompts'
 
-import { version } from "../package.json"
+import { version } from "./package.json"
 
 const cli = cac('wid');
 
-cli.help()
-cli.version(version)
+cli.help();
+cli.version(version);
 
 cli
   .command('create <project>', 'create a new project')
