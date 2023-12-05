@@ -8,8 +8,8 @@
     "wid": "bin/index.js"
   },
   "scripts": {
-    "start": "tsup src/index.ts --watch --env.NODE_ENV development",
-    "build": "tsup src/index.ts --env.NODE_ENV production",
+    "start": "tsup index.ts --watch --env.NODE_ENV development",
+    "build": "tsup index.ts --env.NODE_ENV production",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
