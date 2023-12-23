@@ -27,5 +27,5 @@ export default antfu(
       ],
       'ts/array-type': ['error', { default: 'generic' }],
     },
-  },
+  }
 )
