@@ -4,5 +4,5 @@ Various project boilerplate creation and tool scaffolding inspired by [create-ne
 
 ## project boilerplate
 
-- 
+- [x] Project boilerplate uses a remote repository for decoupling
 - [ ] in progress...
