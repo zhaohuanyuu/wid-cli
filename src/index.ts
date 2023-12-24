@@ -2,6 +2,8 @@
 
 import cac from "cac"
 import { init, update } from "./scripts"
+import { newProject } from "./actions"
+
 import { version } from "../package.json"
 
 const cli = cac('wid');
@@ -17,12 +19,10 @@ cli
   })
 
 cli
-  .command('new <ptoject>', 'create project based on a specified boilerplate')
-  .option('--path <path>', 'path corresponding to the project boilerplate')
+  .command('new [name]', 'create project based on a specified boilerplate')
+  .option('--path [path]', 'path corresponding to the project boilerplate')
   .example('--path monorepo/turbo')
-  .action((name) => {
-    console.log(name);
-  })
+  .action(newProject)
 
 cli.help().version(version).parse()
 

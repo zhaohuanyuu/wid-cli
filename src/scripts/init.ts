@@ -1,35 +1,48 @@
-import { homedir } from "node:os"
-import { stat } from "node:fs/promises"
+import { writeFile } from "node:fs/promises"
 import color from "picocolors"
 import { simpleGit } from "simple-git"
-import { intro, outro, spinner } from "@clack/prompts"
+import { intro, outro, spinner, log } from "@clack/prompts"
+
+import { getDirsFromPath, getFileStat } from "../helpers/fs"
+import { BOILERPLATES_DIR, BOILERPLATES_JSON } from "../helpers/constants"
 
 export default async () => {
-  const loading = spinner();
+  const s = spinner();
   const git = simpleGit();
   const repoUrl = 'https://github.com/zhaohuanyuu/wid-templates.git';
-  const destinationPath = `${homedir()}/.wid/boilerplates`;
 
-  intro(color.bgCyan(' wid initializing... '))
-  
+  intro(color.bgCyan(' wid initialization '))
+
   try {
-    const repoStat = await stat(destinationPath).catch(err => null);
-
-    loading.start('project boilerplates downloading...');
-
+    const repoStat = await getFileStat(BOILERPLATES_DIR);
+    
+    // check project boilerplates is exist
     if (repoStat?.isDirectory()) {
-      loading.stop(`project boilerplates already downloaded.at: ${color.underline(destinationPath)}`);
+      log.info(`project boilerplates already downloaded`);
+      log.success(`you can access at: ${color.underline(BOILERPLATES_DIR)}`);
       outro(`wid has been initialized`);
       return;
     }
 
-    git.clone(repoUrl, destinationPath, ['--depth=1'], (err) => {
-      if (err) {
-        return console.error(err);
-      }
-      loading.stop(`project boilerplates already downloaded. at: ${color.underline(destinationPath)}`);
-      outro(`wid has been initialized`);
-    })
+    // download project boilerplates
+    s.start('project boilerplates downloading...');
+    await git.clone(repoUrl, BOILERPLATES_DIR, ['--depth=1']);
+    s.stop(`project boilerplates already downloaded`);
+    log.success(`you can access at: ${color.underline(BOILERPLATES_DIR)}`);
+
+    // generate boilerplates structure json file
+    const dirs = await getDirsFromPath(BOILERPLATES_DIR);
+    const result = await Promise.all(dirs.map(async (dir) => {
+      const name = dir.name;
+      const subDirs = await getDirsFromPath(dir.path + '/' + name);
+      return {
+        name: name,
+        children: subDirs.map(subDir => ({ name: subDir.name }))
+      };
+    }));
+    await writeFile(BOILERPLATES_JSON, JSON.stringify(result, null, 2));
+
+    outro(`wid has been initialized`);
   } catch(err) {
     outro(err?.toString());
   }
