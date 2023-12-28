@@ -1,9 +1,9 @@
 import { join } from "node:path"
-import { readFile } from "node:fs/promises"
 import color from "picocolors"
 import {
   log,
   text,
+  note,
   intro,
   outro,
   group,
@@ -12,8 +12,8 @@ import {
   spinner
 } from "@clack/prompts"
 
-import { copy, getFileStat } from "../helpers/fs"
 import { validateNpmName } from "../helpers/validate"
+import { copy, isExist, readJson, updateJson } from "../helpers/fs"
 import { BOILERPLATES_DIR, BOILERPLATES_JSON } from "../helpers/constants"
 
 type BoilerplateItem = {
@@ -43,8 +43,7 @@ export default async (name: string, option: any) => {
       return;
     }
   
-    const boilerplateStr = await readFile(BOILERPLATES_JSON, 'utf-8');
-    const boilerplates = boilerplateStr ? JSON.parse(boilerplateStr) : {};
+    const boilerplates = await readJson(BOILERPLATES_JSON);
     const project = await group(
       {
         category: () => select<any, string>({
@@ -75,11 +74,11 @@ export default async (name: string, option: any) => {
     const s = spinner();
     const copySource = ['**'];
     const { category, template } = project;
-    const destDir = join(process.cwd(), `../${name}`);
-    const projectStat = await getFileStat(destDir);
+    const destDir = join(process.cwd(), `/${name}`);
+    const projectExist = await isExist(destDir);
     
     s.start('project boilerplate generating...');
-    if (projectStat?.isDirectory()) {
+    if (projectExist) {
       log.error(`folder ${name} had already been existed!`)
       s.stop(`new project ${name} failed`);
       return;
@@ -88,8 +87,12 @@ export default async (name: string, option: any) => {
       parents: true,
       cwd: `${BOILERPLATES_DIR}/${category}/${template}`
     })
+    await updateJson(`${destDir}/package.json`, res => ({ ...res, name }));
     s.stop('project boilerplate generate completed');
-  
+
+    const nextSteps = `cd   ${name}\npnpm install\npnpm dev`;
+
+	  note(nextSteps, 'then you can'); 
     outro(`new project ${name} complete`)
   } catch (err) {
     outro(err?.toString());

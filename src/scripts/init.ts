@@ -3,7 +3,7 @@ import color from "picocolors"
 import { simpleGit } from "simple-git"
 import { intro, outro, spinner, log } from "@clack/prompts"
 
-import { getDirsFromPath, getFileStat } from "../helpers/fs"
+import { getDirsFromPath, isExist } from "../helpers/fs"
 import { BOILERPLATES_DIR, BOILERPLATES_JSON } from "../helpers/constants"
 
 export default async () => {
@@ -14,10 +14,10 @@ export default async () => {
   intro(color.bgCyan(' wid initialization '))
 
   try {
-    const repoStat = await getFileStat(BOILERPLATES_DIR);
+    const repoExist = await isExist(BOILERPLATES_DIR);
     
     // check project boilerplates is exist
-    if (repoStat?.isDirectory()) {
+    if (repoExist) {
       log.info(`project boilerplates already downloaded`);
       log.success(`you can access at: ${color.underline(BOILERPLATES_DIR)}`);
       outro(`wid has been initialized`);

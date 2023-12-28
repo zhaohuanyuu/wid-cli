@@ -1,9 +1,19 @@
 import path from "node:path"
-import { stat, readdir, mkdir, copyFile } from "fs/promises"
+import {
+  stat,
+  readdir,
+  mkdir,
+  copyFile,
+  readFile,
+  writeFile
+} from "fs/promises"
 
 import glob from "fast-glob"
 
-export const getFileStat = async (uri: string) => await stat(uri).catch(err => null);
+export const isExist = async (uri: string) => {
+  const stats = await stat(uri).catch(err => null);
+  return stats?.isFile() || stats?.isDirectory()
+};
 
 export const getDirsFromPath = async (path: string) => {
   const files = await readdir(path, { withFileTypes: true });
@@ -57,4 +67,38 @@ export const copy = async (
       return copyFile(from, to)
     })
   )
+}
+
+export const readJson = async <T extends object = any>(path: string): Promise<T> => {
+  const exist = await isExist(path);
+
+  if (!exist) {
+    throw new Error(`Cannot find ${path}`);
+  }
+
+  try {
+    const jsonStr = await readFile(path, 'utf-8');
+    return JSON.parse(jsonStr)
+  } catch (err: any) {
+    throw new Error(`Cannot read ${path}: ${err?.message}`);
+  }
+}
+
+export const writeJson = async <T extends object = object>(
+  path: string,
+  value: T
+): Promise<void> => {
+  try {
+    await writeFile(path, JSON.stringify(value, null, 2));
+  } catch (err: any) {
+    throw new Error(`Cannot write ${path}: ${err?.message}`);
+  }
+}
+
+export const updateJson = async <T extends object = any, U extends object = T>(
+  path: string,
+  updater: (value: T) => U
+): Promise<void> => {
+  const updateValue = updater(await readJson(path));
+  await writeJson(path, updateValue)
 }
