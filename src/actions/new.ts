@@ -12,6 +12,7 @@ import {
   spinner
 } from "@clack/prompts"
 
+import config from "../helpers/config"
 import { validateNpmName } from "../helpers/validate"
 import { copy, isExist, readJson, updateJson } from "../helpers/fs"
 import { BOILERPLATES_DIR, BOILERPLATES_JSON } from "../helpers/constants"
@@ -42,7 +43,7 @@ export default async (name: string, option: any) => {
       outro('new project failed!')
       return;
     }
-  
+
     const boilerplates = await readJson(BOILERPLATES_JSON);
     const project = await group(
       {
@@ -76,6 +77,7 @@ export default async (name: string, option: any) => {
     const { category, template } = project;
     const destDir = join(process.cwd(), `/${name}`);
     const projectExist = await isExist(destDir);
+    const { boilerplateDir = BOILERPLATES_DIR } = await config();
     
     s.start('project boilerplate generating...');
     if (projectExist) {
@@ -85,7 +87,7 @@ export default async (name: string, option: any) => {
     }
     await copy(copySource, destDir, {
       parents: true,
-      cwd: `${BOILERPLATES_DIR}/${category}/${template}`
+      cwd: `${boilerplateDir}/${category}/${template}`
     })
     await updateJson(`${destDir}/package.json`, res => ({
       ...res,

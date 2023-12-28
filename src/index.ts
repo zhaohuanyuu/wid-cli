@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import cac from "cac"
-import { init, update } from "./scripts"
 import { newProject } from "./actions"
+import { init, update, set } from "./scripts"
 
 import { version } from "../package.json"
 
@@ -10,9 +10,12 @@ const cli = cac('wid');
 
 cli
   .command('[..files]', 'default command: init、update')
-  .action((name) => {
+  .option('--repo [repo url]', 'set a custom repository url')
+  .action((name, options) => {
     switch(name) {
       case "init": init(); break;
+      case "set": set(options); break;
+      case "reset": set({'--': [], reset: true}); break;
       case "update": update(); break;
       default: return null;
     }

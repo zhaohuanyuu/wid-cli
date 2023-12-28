@@ -2,9 +2,10 @@ import { homedir } from "os"
 import color from "picocolors"
 import { simpleGit } from "simple-git"
 import { intro, outro, spinner } from "@clack/prompts"
+import { BOILERPLATES_DIR } from "../helpers/constants"
 
 export default async () => {
-  const git = simpleGit(`${homedir()}/.wid/boilerplates`);
+  const git = simpleGit(BOILERPLATES_DIR);
 
   intro(color.bgCyan('wid update'));
 
