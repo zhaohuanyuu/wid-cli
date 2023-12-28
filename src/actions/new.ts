@@ -87,7 +87,10 @@ export default async (name: string, option: any) => {
       parents: true,
       cwd: `${BOILERPLATES_DIR}/${category}/${template}`
     })
-    await updateJson(`${destDir}/package.json`, res => ({ ...res, name }));
+    await updateJson(`${destDir}/package.json`, res => ({
+      ...res,
+      name
+    }));
     s.stop('project boilerplate generate completed');
 
     const nextSteps = `cd   ${name}\npnpm install\npnpm dev`;

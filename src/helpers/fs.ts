@@ -10,11 +10,20 @@ import {
 
 import glob from "fast-glob"
 
-export const isExist = async (uri: string) => {
-  const stats = await stat(uri).catch(err => null);
+/**
+ * detect whether file or directory exists
+ * @param path
+ * @returns 
+ */
+export const isExist = async (path: string) => {
+  const stats = await stat(path).catch(err => null);
   return stats?.isFile() || stats?.isDirectory()
 };
-
+/**
+ * get directories and files from specified path
+ * @param path
+ * @returns 
+ */
 export const getDirsFromPath = async (path: string) => {
   const files = await readdir(path, { withFileTypes: true });
 
@@ -31,6 +40,13 @@ interface CopyOption {
 
 const identity = (x: string) => x
 
+/**
+ * copy whole directory from specified path
+ * @param src 
+ * @param dest 
+ * @param options 
+ * @returns 
+ */
 export const copy = async (
   src: string | string[],
   dest: string,
@@ -69,6 +85,11 @@ export const copy = async (
   )
 }
 
+/**
+ * read specified json file
+ * @param path 
+ * @returns 
+ */
 export const readJson = async <T extends object = any>(path: string): Promise<T> => {
   const exist = await isExist(path);
 
@@ -84,6 +105,11 @@ export const readJson = async <T extends object = any>(path: string): Promise<T>
   }
 }
 
+/**
+ * write data to specified json file
+ * @param path 
+ * @param value 
+ */
 export const writeJson = async <T extends object = object>(
   path: string,
   value: T
@@ -95,6 +121,11 @@ export const writeJson = async <T extends object = object>(
   }
 }
 
+/**
+ * update data to specified json file
+ * @param path 
+ * @param updater 
+ */
 export const updateJson = async <T extends object = any, U extends object = T>(
   path: string,
   updater: (value: T) => U

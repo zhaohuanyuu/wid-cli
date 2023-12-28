@@ -1,5 +1,10 @@
 import validateProjectName from 'validate-npm-package-name'
 
+/**
+ * validate project name as npm package
+ * @param name {string}
+ * @returns 
+ */
 export function validateNpmName(name: string): {
   valid: boolean
   problems?: string[]
