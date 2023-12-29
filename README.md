@@ -26,6 +26,10 @@ It must be constrained according to the file structure of the [project boilerpla
 
 ### wid reset
 
+```shell
+wid reset
+```
+
 Reset custom configuration
 
 ## other features
