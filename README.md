@@ -4,10 +4,10 @@ Various project boilerplate creation and tool scaffolding inspired by [create-ne
 
 ## Project creation
 
-### wid new [your-project-name]
+### wid new
 
 ```shell
-wid new myapp
+wid new your-app-name
 ```
 
 After executing this command, create a [project boilerplate](https://github.com/zhaohuanyuu/boilerplates) according to the prompts. 
