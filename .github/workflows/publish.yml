@@ -2,22 +2,11 @@ name: Publish
 on:
   push:
     branches: [develop]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - run: pnpm install
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
   publish-npm:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,4 +25,5 @@ jobs:
         with:
           publish: pnpm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PAKCAGE_RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PAKCAGE_RELEASE }}
