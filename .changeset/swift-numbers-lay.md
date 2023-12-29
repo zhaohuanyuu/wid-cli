@@ -2,4 +2,4 @@
 "wid-cli": patch
 ---
 
-modify bundle output
+add changeset
