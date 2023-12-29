@@ -34,8 +34,6 @@ If you need to use a custom project boilerplate,project boilerplate, you can spe
 
 ### wid set
 
-- repo [boilerplate-repo-url]
-
 ```shell
 wid set --repo your-repo-url
 ```
