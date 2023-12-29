@@ -2,8 +2,8 @@ name: Release
 on:
   workflow_run:
     workflows: [CI]
+    branches: [develop]
     types: [completed]
-    branches: [completed]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 

@@ -5,9 +5,14 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
+    "**/Thumbs.db": true,
+    "node_modules": true,
+    ".gitignore": true,
+    ".eslintignore": true
   },
   "hide-files.files": [
-    "node_modules"
+    "node_modules",
+    ".gitignore",
+    ".eslintignore"
   ]
 }
