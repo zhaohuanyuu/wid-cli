@@ -3,7 +3,7 @@ on:
   push:
     branches: [develop]
 jobs:
-  publish-npm:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,7 +15,21 @@ jobs:
           node-version: 20
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm run build
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm build
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
