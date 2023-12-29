@@ -2,6 +2,24 @@
 
 Various project boilerplate creation and tool scaffolding inspired by [create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and powered by [clack](https://github.com/natemoo-re/clack/tree/main).
 
+```shell
+Usage:
+  $ wid [..files]
+
+Commands:
+  [..files]   default command: init、update
+  new [name]  create project based on a specified boilerplate
+
+For more info, run any command with the `--help` flag:
+  $ wid --help
+  $ wid new --help
+
+Options:
+  --repo [repo url]  set a custom repository url
+  -h, --help         Display this message
+  -v, --version      Display version number
+```
+
 ## Project creation
 
 ### wid new
