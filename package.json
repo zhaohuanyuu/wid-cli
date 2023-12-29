@@ -2,7 +2,7 @@
   "name": "wid-cli",
   "type": "module",
   "author": "auu",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "various project boilerplate creation and tool scaffolding powered by clack",
   "main": "src/index.ts",
   "engines": {
