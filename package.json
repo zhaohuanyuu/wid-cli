@@ -12,7 +12,6 @@
     "wid": "bin/index.js"
   },
   "scripts": {
-    "postinstall": "wid init",
     "lint": "eslint --ext .ts",
     "lint:fix": "eslint --ext .ts --fix",
     "publish": "pnpm run build && changeset publish",
