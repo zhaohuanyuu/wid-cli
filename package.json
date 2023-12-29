@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "eslint --ext .ts",
     "lint:fix": "eslint --ext .ts --fix",
-    "publish": "pnpm run build && changeset publish",
+    "publish": "changeset publish",
     "start": "tsup --watch --env.NODE_ENV development",
     "build": "tsup --minify --env.NODE_ENV production"
   },
