@@ -14,12 +14,12 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-      - run: pnpm install
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - run: pnpm install
       - run: pnpm run build
       - name: Create Release Pull Request or Publish
         id: changesets
