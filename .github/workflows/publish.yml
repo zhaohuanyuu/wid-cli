@@ -1,4 +1,4 @@
-name: Publish to NPM
+name: Publish to Pnpm
 on:
   release:
     types: [created]
@@ -6,16 +6,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Setup Node.js nad pnpm
+        uses: pnpm/setup-pnpm@v2
         with:
-          node-version: '16'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '20'
       - name: Install dependencies and build 🔧
-        run: npm ci
+        run: pnpm ci
       - name: Publish package on NPM 📦
-        run: npm publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.Npm-package }}
