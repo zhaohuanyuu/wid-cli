@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "bin": {
-    "wid": "bin/index.js"
+    "wid": "dist/index.js"
   },
   "scripts": {
     "lint": "eslint --ext .ts",
