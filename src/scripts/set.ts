@@ -1,8 +1,8 @@
 import { log } from "@clack/prompts"
 
 import { init } from "./index"
-import { WID_DIR } from "../helpers/constants"
-import { writeJson, updateJson } from "../helpers/fs"
+import { updateJson } from "../helpers/fs"
+import { WID_DIR, WID_CONF } from "../helpers/constants"
 
 type Options = {
   '--': any[],
@@ -11,7 +11,6 @@ type Options = {
 
 export default async (options: Options) => {
   const { repo, reset } = options;
-  const config = `${WID_DIR}/config.json`;
 
   // set project boilerplate repository url
   if (repo) {
@@ -27,10 +26,11 @@ export default async (options: Options) => {
     const repoNameRegex = /\/([^/]+)\.git$/;
     const [, repoName = ''] = repo.match(repoNameRegex);
 
-    await writeJson(config, {
+    await updateJson(WID_CONF, res => ({
+      ...res,
       repoUrl: repo,
       boilerplateDir: `${WID_DIR}/${repoName}`
-    })
+    }))
 
     // run init again
     await init(true);
@@ -38,7 +38,11 @@ export default async (options: Options) => {
 
   // reset configuration
   if (reset) {
-    await updateJson(config, res => ({}));
+    await updateJson(WID_CONF, res => ({
+      ...res,
+      repoUrl: undefined,
+      boilerplateDir: undefined
+    }));
     await init(true);
   }
 }

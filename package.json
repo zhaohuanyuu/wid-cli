@@ -2,7 +2,7 @@
   "name": "wid-cli",
   "type": "module",
   "author": "auu",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "various project boilerplate creation and tool scaffolding powered by clack",
   "main": "src/index.ts",
   "engines": {
@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "eslint --ext .ts",
     "lint:fix": "eslint --ext .ts --fix",
-    "publish": "changeset publish",
+    "publish": "pnpm build && changeset publish",
     "start": "tsup --watch --env.NODE_ENV development",
     "build": "tsup --minify --env.NODE_ENV production"
   },

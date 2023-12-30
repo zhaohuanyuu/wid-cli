@@ -9,9 +9,11 @@ import {
   group,
   select,
   cancel,
-  spinner
+  spinner,
+  isCancel
 } from "@clack/prompts"
 
+import { init } from "../scripts"
 import config from "../helpers/config"
 import { validateNpmName } from "../helpers/validate"
 import { copy, isExist, readJson, updateJson } from "../helpers/fs"
@@ -23,7 +25,15 @@ type BoilerplateItem = {
 }
 
 export default async (name: string, option: any) => {
-  intro(color.bgCyan(' wid new project '))
+  const { isInit = false, boilerplateDir = BOILERPLATES_DIR } = await config();
+  
+  if (!isInit) {
+    log.step('initialization is required before new project');
+    log.message('');
+    await init();
+  }
+
+  intro(color.bgCyan(' wid new project '));
 
   if (!name) {
     name = await text({
@@ -33,11 +43,15 @@ export default async (name: string, option: any) => {
         if (value.length <= 0) return 'project name is required!'
       }
     }) as string
-    console.log(color.magenta(name))
+    if (isCancel(name)) {
+      outro('new project cancelled!')
+      return;
+    }
   }
 
   try {
     const { valid, problems } = validateNpmName(name);
+
     if (!valid) {
       problems?.forEach(item => log.error(color.red(item)))
       outro('new project failed!')
@@ -77,7 +91,6 @@ export default async (name: string, option: any) => {
     const { category, template } = project;
     const destDir = join(process.cwd(), `/${name}`);
     const projectExist = await isExist(destDir);
-    const { boilerplateDir = BOILERPLATES_DIR } = await config();
     
     s.start('project boilerplate generating...');
     if (projectExist) {
@@ -100,6 +113,7 @@ export default async (name: string, option: any) => {
 	  note(nextSteps, 'then you can'); 
     outro(`new project ${name} complete`)
   } catch (err) {
+    outro('>>>>>>>>>>>>>>>>>')
     outro(err?.toString());
   }
 }

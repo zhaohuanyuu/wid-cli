@@ -4,8 +4,8 @@ import { simpleGit } from "simple-git"
 import { intro, outro, spinner, log } from "@clack/prompts"
 
 import config from "../helpers/config"
-import { getDirsFromPath, isExist } from "../helpers/fs"
-import { BOILERPLATES_DIR, BOILERPLATES_JSON, BOILERPLATES_REPO } from "../helpers/constants"
+import { getDirsFromPath, isExist, writeJson } from "../helpers/fs"
+import { BOILERPLATES_DIR, BOILERPLATES_JSON, BOILERPLATES_REPO, WID_CONF } from "../helpers/constants"
 
 export default async (isSet?: boolean) => {
   const s = spinner();
@@ -15,7 +15,7 @@ export default async (isSet?: boolean) => {
     repoUrl = BOILERPLATES_REPO,
     boilerplateDir = BOILERPLATES_DIR
   } = await config();
-
+  
   intro(color.bgCyan(` wid ${tipPrefix}initializing `));
 
   // log.warning(color.bgMagenta(' debug > repoUrl: ') + repoUrl)
@@ -47,10 +47,12 @@ export default async (isSet?: boolean) => {
         children: subDirs.map(subDir => ({ name: subDir.name }))
       };
     }));
+    await writeJson(WID_CONF, { isInit: true });
     await writeFile(BOILERPLATES_JSON, JSON.stringify(result, null, 2));
 
     outro(`wid has been ${tipPrefix}initialized`);
   } catch(err) {
-    outro(err?.toString());
+    console.error(err);
+    // outro(err?.toString());
   }
 }
